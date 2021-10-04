@@ -51,7 +51,7 @@ for shps in findfiles(dest, '*.shp'):
     newpath = pathshape+ '/'+shapename[:-4]
     print(newpath)        
     os.makedirs(newpath)
-    for raster in fidefiles (infolder2, '*.tif'):
+    for raster in findfiles (infolder2, '*.tif'):
             (infilepath, infilename)= os.path.split (raster)
             print(infilename)
             outRaster= newpath+'/'+infilename[:-4]+'.tif'
