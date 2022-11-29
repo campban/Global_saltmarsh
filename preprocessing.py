@@ -13,6 +13,7 @@ import osgeo
 import sys
 import numpy as np
 import gdal
+import glob
 
 #output location
 dest = ""
@@ -36,22 +37,16 @@ with fiona.open(infile) as source:
          
 
 #folder with shapefiles, will have outputs in seperate folders too
-os.chdir (dest)
-
-def findfiles(path, filter):
-    for root, dirs, files in os.walk(path, filter):
-        for file in fnmatch.filter(files, filter):
-            yield os.path.join (root, file)
-            print(file)   
+os.chdir (dest)   
 #rasters location
 infolder2 = ""
 
-for shps in findfiles(dest, '*.shp'):
+for shps in glob.glob(os.path.join(dest, '*.shp')):
     (pathshape, shapename)=os.path.split (shps)
     newpath = pathshape+ '/'+shapename[:-4]
     print(newpath)        
     os.makedirs(newpath)
-    for raster in findfiles (infolder2, '*.tif'):
+    for raster in glob.glob(os.path.join(infolder2, '*.tif')):
             (infilepath, infilename)= os.path.split (raster)
             print(infilename)
             outRaster= newpath+'/'+infilename[:-4]+'.tif'
